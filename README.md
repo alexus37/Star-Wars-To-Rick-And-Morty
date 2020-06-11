@@ -3,7 +3,7 @@
 At some point in my life, I asked myself how would the amazing Rick and
 Morty look like in real. All the nice artistic drawings of space monsters and
 weird worlds, would probably be amazing input for a digital CG artist.
-Sadly, I have zero animations or modeling skills so I had to take a different route. \
+Sadly, I have zero animations or modeling skills so I had to take a different route.
 
 I recently learned about the [Cycle-GAN](https://junyanz.github.io/CycleGAN/),
 an amazing technology that takes the style from
@@ -82,6 +82,28 @@ Now the only thing left to do is to merge the frames into a video.
     ffmpeg -framerate 24 -pattern_type glob -i 'starwars*_fake_A.png' -c:v libx264 -r 30 -pix_fmt yuv420p fake_A.mp4
 ```
 
-TODO: add sound
+As a final step, we have to extract the sound from the original files and add them to the newly created videos.
+
+```bash
+    ffmpeg -i rickAndMorty.mp4 -q:a 0 -map a rickAndMorty.mp3
+    ffmpeg -i fake_A.mp4 -i rickAndMorty.mp3 -codec copy -shortest rickandmortyFinal.mp4
+```
+
+Done!
 
 ## Results
+
+In this section, I quickly want to show some results.
+
+### Results from Rick and Morty
+
+I have to say, I was a bit disappointed with the results in this direction of the style transfer. However,
+it was kind of expected since, creating something realistic from a comic is quite hard.
+The dark style of Star Wars led to a darkening of every frame. In some case we can see some 3D effects coming up.
+To get better results I guess some fine-tuning is required.
+But I think it was still a funny project.
+
+### Results from Star Wars
+
+On the other hand, I really love the results of the Star Wars style transfer. I think the colourful essence of Rick and Morty
+got very well transferred. Additionally, I was very surprised that were no temporal artifacts or borders of patches visible.
